@@ -25,4 +25,21 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+
+    //Android Support Design Library
+    implementation 'com.android.support:design:28.0.0'
+    //RecyclerView
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+
+    //cardview
+    implementation 'com.android.support:cardview-v7:28.0.0'
+
+
+    //Retrofit JSON
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
 }
