@@ -3,83 +3,74 @@ package com.ayetolu.samuel.phonebook.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "users",indices =  @Index(value = {"phoneNumber"},unique = true))
 public class User implements Parcelable {
 
-    @SerializedName("serial_number")
-    @Expose
-    private String serialNumber;
-    @SerializedName("id_number")
-    @Expose
-    private String idNumber;
-    @SerializedName("date")
-    @Expose
-    private String date;
+
     @SerializedName("full_name")
     @Expose
     private String fullName;
+
+    @PrimaryKey()
     @SerializedName("phone_number")
     @Expose
+    @NonNull
     private String phoneNumber;
+
     @SerializedName("email_address")
     @Expose
     private String emailAddress;
+
     @SerializedName("resident_address")
     @Expose
     private String residentAddress;
-    public final static Parcelable.Creator<User> CREATOR = new Creator<User>() {
 
 
-        @SuppressWarnings({
-                "unchecked"
-        })
+    public User() {
+
+    }
+
+    protected User(Parcel in) {
+
+        fullName = in.readString();
+        phoneNumber = in.readString();
+        emailAddress = in.readString();
+        residentAddress = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
         public User createFromParcel(Parcel in) {
             return new User(in);
         }
 
+        @Override
         public User[] newArray(int size) {
-            return (new User[size]);
-        }};
+            return new User[size];
+        }
+    };
 
-    protected User(Parcel in) {
-        this.serialNumber = ((String) in.readValue((String.class.getClassLoader())));
-        this.idNumber = ((String) in.readValue((String.class.getClassLoader())));
-        this.date = ((String) in.readValue((String.class.getClassLoader())));
-        this.fullName = ((String) in.readValue((String.class.getClassLoader())));
-        this.phoneNumber = ((String) in.readValue((String.class.getClassLoader())));
-        this.emailAddress = ((String) in.readValue((String.class.getClassLoader())));
-        this.residentAddress = ((String) in.readValue((String.class.getClassLoader())));
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-
-
-
-
-    public String getSerialNumber() {
-        return serialNumber;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(fullName);
+        dest.writeString(phoneNumber);
+        dest.writeString(emailAddress);
+        dest.writeString(residentAddress);
     }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-
-    public String getIdNumber() {
-        return idNumber;
-    }
-
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public String getFullName() {
         return fullName;
@@ -113,18 +104,5 @@ public class User implements Parcelable {
         this.residentAddress = residentAddress;
     }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(serialNumber);
-        dest.writeValue(idNumber);
-        dest.writeValue(date);
-        dest.writeValue(fullName);
-        dest.writeValue(phoneNumber);
-        dest.writeValue(emailAddress);
-        dest.writeValue(residentAddress);
-    }
-
-    public int describeContents() {
-        return 0;
-    }
 
 }
