@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_delete_white_24dp"
+        android:title=""
+        app:showAsAction="always"
+
+        />
+    <item
+        android:id="@+id/call"
+        android:icon="@drawable/ic_call_white_24dp"
+        android:title="Call"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/send_sms"
+        android:icon="@drawable/ic_message_white_24dp"
+        android:title="Sms"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/chat"
+        android:icon="@drawable/whatsap"
+        android:title=""
+        android:visible="false"
+        app:showAsAction="always" />
+</menu>
