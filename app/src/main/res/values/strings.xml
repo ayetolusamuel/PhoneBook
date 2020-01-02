@@ -27,5 +27,12 @@
     <string name="delete_user_id">delete user</string>
     <string name="intent_passed">intent_passed</string>
     <string name="constant">constant</string>
+    <string name="no_empty_phone_number">phone number can not be empty</string>
+    <string name="invalid_phone_number">Invalid number, your contact should be 11 digits</string>
+    <string name="no_empty_email">email address can not be empty</string>
+    <string name="no_empty_name">full name can not be empty</string>
+    <string name="no_empty_address">residential address can not be empty</string>
+    <string name="save">save</string>
+    <string name="empty_string" />
 
 </resources>

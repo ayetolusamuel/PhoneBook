@@ -15,8 +15,6 @@ if(action == 'add_user_details'){
 
 }
 
-
-
   if(action =="delete_user_details"){
    return delete_user_details(e);
 
@@ -34,6 +32,8 @@ var action = e.parameter.action;
     return read_all_user_details(e);
 
   }
+
+
   }
 
 
@@ -42,23 +42,25 @@ var action = e.parameter.action;
 function add_user_details(e){
 
  var serial_number = ""+sheet.getLastRow(); // Item1
- var id_number  = "set"+Math.floor(Math.random() * 90000); // 5 random number concatenate set String
+ //var id_number  = "set"+Math.floor(Math.random() * 90000); // 5 random number concatenate set String
  var date_ =  new Date();
  date_ = ( date_.getDate() + '/' +(date_.getMonth()+1)+ '/'  +  date_.getFullYear())
  var full_name = e.parameter.full_name;
  var phone_number = e.parameter.phone_number;
  var email_address = e.parameter.email_address;
  var resident_address = e.parameter.resident_address;
- sheet.appendRow([serial_number,id_number,date_,full_name,phone_number,email_address,resident_address]);
+ sheet.appendRow([serial_number,date_,full_name,phone_number,email_address,resident_address]);
 
-  return ContentService.createTextOutput("Data Saved Successfully").setMimeType(ContentService.MimeType.TEXT);
+  return ContentService
+  .createTextOutput("Data Saved Successfully")
+  .setMimeType(ContentService.MimeType.TEXT);
 }
 
 
 
 
 function delete_user_details(request){
-     var id = request.parameter.id_number;
+     var id = request.parameter.phone_number;
      var flag = 0;
 
 
@@ -66,7 +68,9 @@ function delete_user_details(request){
 
 
   for (var i=1;i<=lr;i++) {
-         var rid = sheet.getRange(i, 2).getValue();
+         var rid = sheet.getRange(i, 4).getValue();
+    console.log("ID : "+rid);
+    console.log(""+ id);
         if (rid == id) {
               sheet.deleteRow(i);
           var result = id+ " value deleted successfully";
@@ -92,36 +96,41 @@ function delete_user_details(request){
 }
 
 
+
 function read_all_user_details(e){
-  var records={};
+
+
+var records={};
   var rows = sheet.getRange(2,1,sheet.getLastRow() - 1,sheet.getLastColumn()).getValues();
-  data = [];
+      data = [];
 
   for (var r = 0, l = rows.length; r < l; r++) {
     var row     = rows[r],
         record  = {};
 
-  record['serial_number'] = row[0];
-    record['id_number'] = row[1];
-    record['date'] = row[2];
-    record['full_name'] = row[3];
-    record['phone_number']=row[4];
-    record['email_address']=row[5];
-    record['resident_address']=row[6];
+ record['serial_number'] = row[0];
+    record['date'] = row[1];
+    record['full_name'] = row[2];
+   record['phone_number']=row[3];
+    record['email_address']=row[4];
+    record['resident_address']=row[5];
 
     data.push(record);
-  }
-    records.items = data;
-    var result=JSON.stringify(records);
-    return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
+
+   }
+  records.items = data;
+  var result=JSON.stringify(records);
+  return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
+
+
 }
 
 
 function update_user_details(request){
 
   var flag=0;
+  var results ="";
 
-  var id_number = request.parameter.id_number;
   var date_ = request.parameter.date_;
   var full_name = request.parameter.full_name;
   var phone_number = request.parameter.phone_number;
@@ -132,26 +141,29 @@ function update_user_details(request){
 
   var lr= sheet.getLastRow();
   for(var i=1;i<=lr;i++){
-    var rid = sheet.getRange(i, 2).getValue();
-    if(rid==id_number){
-      sheet.getRange(i,3).setValue(date_);
-      sheet.getRange(i,4).setValue(full_name);
-      sheet.getRange(i,5).setValue(phone_number);
-      sheet.getRange(i,6).setValue(email_address);
-      sheet.getRange(i,7).setValue(resident_address);
-      var result= " value for " + id_number+ " is updated successfully.";
+    var rid = sheet.getRange(i, 4).getValue();
+    if(rid==phone_number){
+
+      sheet.getRange(i,3).setValue(full_name);
+      sheet.getRange(i,4).setValue(phone_number);
+      sheet.getRange(i,5).setValue(email_address);
+      sheet.getRange(i,6).setValue(resident_address);
+      results = " value for " + phone_number+ " is updated successfully.";
       flag=1;
     }
 }
-  if(flag==0)
-    var result="Record  not found for " +id_number;
+  if(flag==0){
+     var result="Record  not found for " +phone_number;
 
-   result = JSON.stringify({
-    "result": result
+  }
+
+
+   results = JSON.stringify({
+    "result": results
   });
 
   return ContentService
-  .createTextOutput(request.parameter.callback + "(" + result + ")")
+  .createTextOutput(results)
   .setMimeType(ContentService.MimeType.JAVASCRIPT);
 
 

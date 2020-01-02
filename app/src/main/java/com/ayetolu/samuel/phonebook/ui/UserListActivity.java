@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ayetolu.samuel.phonebook.R;
+import com.ayetolu.samuel.phonebook.utils.Utils;
 import com.ayetolu.samuel.phonebook.viemodel.UserViewModel;
 import com.ayetolu.samuel.phonebook.adapter.UserAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -54,6 +55,7 @@ public class UserListActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
+        Utils.newInstance().hideKeyboard(this);
     }
 
 
